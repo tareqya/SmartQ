@@ -2,15 +2,16 @@ const functions = require("firebase-functions");
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./serviceAccountKey.json");
+const AddQueue = require("./AddQueue");
+const GetUser = require("./GetUser");
+const GetUserQueuesByDate = require("./GetUserQueuesByDate");
+const RemoveQueue = require("./RemoveQueue");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.AddQueue = functions.https.onRequest(AddQueue);
+exports.GetUser = functions.https.onRequest(GetUser);
+exports.GetUserQueuesByDate = functions.https.onRequest(GetUserQueuesByDate);
+exports.RemoveQueue = functions.https.onRequest(RemoveQueue);

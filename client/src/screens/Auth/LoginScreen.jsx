@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import React from "react";
 
-import { Container, EditText } from "../../components";
+import { Container, CustomButton, EditText } from "../../components";
 import { Icons, Images, SIZES } from "../../../assets/styles";
 
 const LoginScreen = () => {
@@ -25,7 +25,11 @@ const LoginScreen = () => {
         />
 
         {/* login button */}
-
+        <CustomButton
+          label={"Login"}
+          onPress={() => {}}
+          style={styles.btnLogin}
+        />
         {/* erorr msg  */}
       </View>
     </Container>
@@ -42,6 +46,9 @@ const styles = StyleSheet.create({
   },
   uidInput: {
     marginHorizontal: 10,
-    marginTop: SIZES.padding * 5,
+    marginTop: SIZES.padding * 6,
+  },
+  btnLogin: {
+    marginTop: 100,
   },
 });
