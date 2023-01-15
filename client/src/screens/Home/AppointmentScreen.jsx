@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Container } from "../../components";
-const HomeScreen = () => {
+
+const AppointmentScreen = () => {
   return (
     <Container>
-      <Text>HomeScreen</Text>
+      <Text>AppointmentScreen</Text>
     </Container>
   );
 };
 
-export default HomeScreen;
+export default AppointmentScreen;
 
 const styles = StyleSheet.create({});

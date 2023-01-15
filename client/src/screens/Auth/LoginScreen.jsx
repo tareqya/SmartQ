@@ -1,11 +1,24 @@
 import { Image, StyleSheet, View } from "react-native";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Container, CustomButton, EditText } from "../../components";
 import { Icons, Images, SIZES } from "../../../assets/styles";
+import { login } from "../../actions/AuthActions";
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+  const AuthState = useSelector((state) => state.AuthReducer);
   const [uid, setUid] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const hanldeLoginPress = async () => {
+    if (loading) return;
+    setLoading(true);
+    const action = await login(uid);
+    dispatch(action);
+    setLoading(false);
+  };
 
   return (
     <Container>
@@ -26,11 +39,11 @@ const LoginScreen = () => {
 
         {/* login button */}
         <CustomButton
-          label={"Login"}
-          onPress={() => {}}
+          loading={loading}
+          label={"התחבר"}
+          onPress={hanldeLoginPress}
           style={styles.btnLogin}
         />
-        {/* erorr msg  */}
       </View>
     </Container>
   );

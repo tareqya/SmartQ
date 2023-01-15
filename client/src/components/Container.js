@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
+import { StyleSheet, View, SafeAreaView, FlatList } from "react-native";
 import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { SIZES } from "../../assets/styles";
