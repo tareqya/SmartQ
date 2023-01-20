@@ -1,8 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import { useFonts } from "expo-font";
+import { I18nManager } from "react-native";
 import store from "./src/store";
 import MainNavigation from "./src/navigation/MainNavigation";
+
+try {
+  I18nManager.allowRTL(false);
+} catch (e) {
+  console.log(e);
+}
 
 const App = () => {
   const [loaded] = useFonts({

@@ -1,4 +1,10 @@
-import { StyleSheet, View, SafeAreaView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  FlatList,
+  Platform,
+} from "react-native";
 import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { SIZES } from "../../assets/styles";
@@ -7,7 +13,7 @@ const Container = ({ children, header = null }) => {
   const { colors } = useTheme();
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
-      <SafeAreaView />
+      <SafeAreaView style={{ marginTop: Platform.OS == "ios" ? 0 : 20 }} />
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

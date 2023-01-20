@@ -8,7 +8,6 @@ import { login } from "../../actions/AuthActions";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
-  const AuthState = useSelector((state) => state.AuthReducer);
   const [uid, setUid] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 

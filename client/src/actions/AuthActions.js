@@ -2,12 +2,12 @@ import axios from "axios";
 import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "./TYPES";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BASE_URL = "http://localhost:3000/api/";
+const BASE_URL = "http://127.0.0.1:5001/smartq-20ef8/us-central1";
 const USER_KEY = "User";
 
 export const login = async (uid) => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/${uid}`);
+    const response = await axios.get(`${BASE_URL}/GetUser`, { uid });
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(response.data.user));
 
     return {

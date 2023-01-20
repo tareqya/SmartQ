@@ -20,6 +20,7 @@ const BottomTabNavigation = () => {
           borderTopStartRadius: 20,
           borderTopEndRadius: 20,
           height: 80,
+          position: "absolute",
         },
       }}
       initialRouteName="HomeScreen"

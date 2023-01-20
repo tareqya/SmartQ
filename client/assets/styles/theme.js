@@ -17,6 +17,7 @@ export const COLORS = {
   lightGray: "#ABAFB8",
   lightGray2: "#EFEFF0",
   lightGray3: "#D4D5D6",
+  tomato: "tomato",
   gray: "#BEC1D2",
   blue: "#42B0FF",
   darkGreen: "#59990F",
