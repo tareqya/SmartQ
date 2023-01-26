@@ -1,10 +1,10 @@
 const admin = require("firebase-admin");
 
 module.exports = async (req, res) => {
-  if (!req.body.uid) {
+  if (!req.body.uid || !req.body.password) {
     return res.status(422).send({ msg: "Bad input" });
   }
-  const { uid } = req.body;
+  const { uid, password } = req.body;
   try {
     var snapshot = await admin
       .firestore()
@@ -15,12 +15,13 @@ module.exports = async (req, res) => {
       return { ...doc.data() };
     });
 
-    if (data.length == 0)
-      return res.send({ user: null, msg: "user not found!" });
+    if (data.length == 0) throw "Username or Password not correct!";
 
+    const user = data[0];
+    if (user.password != password) throw "Username or Password not correct!";
     return res.send({ user: data[0], msg: "success" });
   } catch (err) {
     console.error(err);
-    return res.status(422).send({ msg: "failed", user: null });
+    return res.status(422).send({ msg: err, user: null });
   }
 };

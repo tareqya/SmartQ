@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, ProfileScreen, AppointmentScreen } from "../screens/Home";
+import { HomeScreen, ProfileScreen } from "../screens/Home";
 
 import { COLORS, Icons } from "../../assets/styles";
 
@@ -46,27 +46,7 @@ const BottomTabNavigation = () => {
           };
         }}
       />
-      <Tab.Screen
-        name="AppointmentScreen"
-        component={AppointmentScreen}
-        options={() => {
-          return {
-            tabBarIcon: ({ color, size, focused }) => (
-              <View style={styles.iconWrapper}>
-                <Icons.QueueIcon fill={color} />
-                <Text
-                  style={[
-                    styles.iconLabel,
-                    { color: focused ? COLORS.primary : COLORS.darkGray },
-                  ]}
-                >
-                  התורים שלי
-                </Text>
-              </View>
-            ),
-          };
-        }}
-      />
+
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
@@ -81,7 +61,7 @@ const BottomTabNavigation = () => {
                     { color: focused ? COLORS.primary : COLORS.darkGray },
                   ]}
                 >
-                  המשתמש
+                  פרופיל
                 </Text>
               </View>
             ),
@@ -117,7 +97,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   iconLabel: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: 2,
   },
 });

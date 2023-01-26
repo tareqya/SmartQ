@@ -1,24 +1,31 @@
 import axios from "axios";
 import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "./TYPES";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { encrpt } from "../utils/utilsFunctions";
+import { BASE_URL } from "../utils/constans";
+import { showErrorMsg } from "./CommonActions";
 
-const BASE_URL = "http://127.0.0.1:5001/smartq-20ef8/us-central1";
+const Get_User = `${BASE_URL}/GetUser`;
 const USER_KEY = "User";
 
-export const login = async (uid) => {
+export const login = async (dispatch, uid, password) => {
   try {
-    const response = await axios.get(`${BASE_URL}/GetUser`, { uid });
+    const encryptedPassword = await encrpt(password);
+    const response = await axios.post(Get_User, {
+      uid: uid,
+      password: encryptedPassword,
+    });
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(response.data.user));
-
     return {
       type: LOGIN_SUCCESS,
       payload: response.data.user,
     };
   } catch (err) {
-    console.log(err);
+    const msg = "ת״ז או סיסמה לא נכונים!";
+    dispatch(showErrorMsg(msg));
+    console.log(err.response.data);
     return {
       type: LOGIN_FAIL,
-      payload: "ת״ז לא נכונה!",
     };
   }
 };

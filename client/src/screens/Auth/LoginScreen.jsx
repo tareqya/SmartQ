@@ -5,18 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, CustomButton, EditText } from "../../components";
 import { Icons, Images, SIZES } from "../../../assets/styles";
 import { login } from "../../actions/AuthActions";
+import { cleanMsg, setLoading } from "../../actions/CommonActions";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const [uid, setUid] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+  const [secure, setSecure] = React.useState(true);
+  const CommonReducer = useSelector((state) => state.CommonReducer);
+
+  const { loading } = CommonReducer;
 
   const hanldeLoginPress = async () => {
     if (loading) return;
-    setLoading(true);
-    const action = await login(uid);
+    dispatch(cleanMsg());
+    dispatch(setLoading(true));
+    const action = await login(dispatch, uid, password);
     dispatch(action);
-    setLoading(false);
+    dispatch(setLoading(false));
   };
 
   return (
@@ -35,7 +41,17 @@ const LoginScreen = () => {
           style={styles.uidInput}
           numbers
         />
-
+        {/* password input */}
+        <EditText
+          value={password}
+          onChange={(txt) => setPassword(txt)}
+          label="סיסמה"
+          placeholder={"הזן את הסיסמה שלך"}
+          icon={secure ? "eye" : "eye-off"}
+          style={{ ...styles.uidInput, marginTop: 10 }}
+          onPress={() => setSecure((prev) => !prev)}
+          secure={secure}
+        />
         {/* login button */}
         <CustomButton
           loading={loading}

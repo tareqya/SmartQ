@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Images, FONTS, COLORS, Icons } from "../../../assets/styles";
+import { Images, FONTS, COLORS, Icons, SIZES } from "../../../assets/styles";
 import { Body, Container } from "../../components";
 import { logout } from "../../actions/AuthActions";
 
@@ -26,7 +26,7 @@ const ProfileScreen = () => {
             resizeMode="stretch"
           />
           <Text
-            style={FONTS.body2}
+            style={FONTS.body1}
           >{`${user.firstName} ${user.lastName}`}</Text>
         </View>
 
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
           <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
             <Text style={styles.logoutText}>התנתק</Text>
             <View style={styles.logoutIconWrapper}>
-              <Icons.LogoutIcon size={20} color={COLORS.tomato} />
+              <Icons.LogoutIcon size={SIZES.body1} color={COLORS.tomato} />
             </View>
           </TouchableOpacity>
         </View>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   inpuTitle: {
-    ...FONTS.h3,
+    ...FONTS.h2,
     textAlign: "right",
     color: COLORS.black,
   },
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   inpuText: {
-    ...FONTS.body3,
+    ...FONTS.body2,
     color: COLORS.lightGray,
   },
   inputWrapper: {
     marginVertical: 10,
   },
   logoutText: {
-    ...FONTS.body2,
+    ...FONTS.body1,
     color: COLORS.tomato,
     marginHorizontal: 5,
   },

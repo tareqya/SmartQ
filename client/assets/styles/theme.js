@@ -20,6 +20,7 @@ export const COLORS = {
   tomato: "tomato",
   gray: "#BEC1D2",
   blue: "#42B0FF",
+  green: "#67C06B",
   darkGreen: "#59990F",
   darkGray: "#898C95",
   transparentLightGray: "#CCD4D5D6",
@@ -57,8 +58,8 @@ export const FONTS = {
   },
   h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 },
   h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30 },
-  h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 22 },
-  h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22 },
+  h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 24 },
+  h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 20 },
   body1: {
     fontFamily: "Roboto-Regular",
     fontSize: SIZES.body1,
@@ -72,12 +73,12 @@ export const FONTS = {
   body3: {
     fontFamily: "Roboto-Regular",
     fontSize: SIZES.body3,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   body4: {
     fontFamily: "Roboto-Regular",
     fontSize: SIZES.body4,
-    lineHeight: 22,
+    lineHeight: 20,
   },
 };
 

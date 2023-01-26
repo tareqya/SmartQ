@@ -10,20 +10,19 @@ const CustomButton = ({ label, onPress, style = {}, loading = false }) => {
       mode="contained"
       onPress={onPress}
       loading={loading}
-      style={[
-        {
-          backgroundColor: COLORS.primary,
-          marginHorizontal: 20,
-          borderRadius: 5,
-        },
-        style,
-      ]}
+      style={[styles.btn, style]}
     >
-      <Text style={FONTS.h2}>{label}</Text>
+      <Text style={FONTS.h1}>{label}</Text>
     </Button>
   );
 };
 
 export default CustomButton;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btn: {
+    backgroundColor: COLORS.primary,
+    marginHorizontal: 20,
+    borderRadius: 5,
+  },
+});
