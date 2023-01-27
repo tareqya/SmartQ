@@ -2,9 +2,10 @@ const functions = require("firebase-functions");
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./serviceAccountKey.json");
-const AddAppointment = require("./AddAppointment");
+
 const GetUser = require("./GetUser");
-const RemoveQueue = require("./RemoveQueue");
+const AddAppointment = require("./AddAppointment");
+const RemoveAppointment = require("./RemoveAppointment");
 const GetUserAppointments = require("./GetUserAppointments");
 
 admin.initializeApp({
@@ -13,5 +14,5 @@ admin.initializeApp({
 
 exports.AddAppointment = functions.https.onRequest(AddAppointment);
 exports.GetUser = functions.https.onRequest(GetUser);
-exports.RemoveQueue = functions.https.onRequest(RemoveQueue);
+exports.RemoveAppointment = functions.https.onRequest(RemoveAppointment);
 exports.GetUserAppointments = functions.https.onRequest(GetUserAppointments);

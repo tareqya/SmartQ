@@ -1,7 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, ProfileScreen } from "../screens/Home";
+import {
+  HomeScreen,
+  ProfileScreen,
+  AppointmentMenuScreen,
+  SearchCloserAppointmentScreen,
+  CancelAppointmentScreen,
+  ResheduleAppointmentScreen,
+} from "../screens/Home";
 
 import { COLORS, Icons } from "../../assets/styles";
 
@@ -85,6 +92,22 @@ const HomeNavigation = () => {
         component={BottomTabNavigation}
       />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen
+        name="AppointmentMenuScreen"
+        component={AppointmentMenuScreen}
+      />
+      <Stack.Screen
+        name="CancelAppointmentScreen"
+        component={CancelAppointmentScreen}
+      />
+      <Stack.Screen
+        name="ResheduleAppointmentScreen"
+        component={ResheduleAppointmentScreen}
+      />
+      <Stack.Screen
+        name="SearchCloserAppointmentScreen"
+        component={SearchCloserAppointmentScreen}
+      />
     </Stack.Navigator>
   );
 };

@@ -28,7 +28,11 @@ export default function (state = default_state, action) {
         msgType: INFO,
       };
     case SHOW_SUCCESS_MSG:
-      return { ...state, msg: action.payload, msgType: SUCCESS };
+      return {
+        ...state,
+        msg: action.payload,
+        msgType: SUCCESS,
+      };
     case CLEAN_MSG:
       return { ...state, msgType: "", msg: "" };
     case LOADING:

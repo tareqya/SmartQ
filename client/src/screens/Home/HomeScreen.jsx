@@ -8,11 +8,16 @@ import {
 } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Appointment, Body, Container } from "../../components";
-import { Images, FONTS } from "../../../assets/styles";
-import { cleanMsg, setLoading, fetchMyAppointements } from "../../actions";
+import { Appointment, Body, Container, LoadingBar } from "../../components";
+import { Images, FONTS, SIZES } from "../../../assets/styles";
+import {
+  cleanMsg,
+  setLoading,
+  fetchMyAppointements,
+  setSelectedAppointment,
+} from "../../actions";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const AuthState = useSelector((state) => state.AuthReducer);
   const HomeState = useSelector((state) => state.HomeReducer);
@@ -34,13 +39,18 @@ const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const handleAppointmentPress = () => {};
+  const handleAppointmentPress = (appointment) => {
+    const currentTime = new Date().getTime();
+    if (appointment.time < currentTime) return;
+    dispatch(setSelectedAppointment(appointment));
+    navigation.navigate("AppointmentMenuScreen");
+  };
 
   if (loading) {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <Container>
+        <LoadingBar />
+      </Container>
     );
   }
   return (
@@ -67,14 +77,21 @@ const HomeScreen = () => {
             <TouchableOpacity
               style={{ marginVertical: 10 }}
               activeOpacity={0.9}
-              onPress={handleAppointmentPress}
+              onPress={() => handleAppointmentPress(item)}
             >
               <Appointment appointment={item} />
             </TouchableOpacity>
           )}
           ListEmptyComponent={
-            <View>
-              <Text>לא קיים תורים עבורך</Text>
+            <View style={styles.emptyListWrapper}>
+              <Image
+                source={Images.EMPTY_IMAGE}
+                style={styles.emptyListImg}
+                resizeMode="stretch"
+              />
+              <Text style={[FONTS.body2, { marginTop: 10 }]}>
+                לא קיים תורים עבורך
+              </Text>
             </View>
           }
         />
@@ -100,5 +117,13 @@ const styles = StyleSheet.create({
   welcomeWrapper: {
     alignItems: "flex-end",
     marginHorizontal: 10,
+  },
+  emptyListImg: {
+    width: SIZES.width * 0.7,
+    height: SIZES.width * 0.7,
+  },
+  emptyListWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

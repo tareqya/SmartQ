@@ -9,6 +9,7 @@ import {
 import Icons from "../../assets/styles/icons";
 import { COLORS, FONTS, SIZES } from "../../assets/styles";
 import { ERROR, SUCCESS, INFO } from "../utils/constans";
+import CustomButton from "./CustomButton";
 
 const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
   const getDialogImage = () => {
@@ -17,6 +18,14 @@ const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
     else return INFO_IMAGE;
   };
 
+  const getButtonBackground = () => {
+    if (msgType == ERROR) return COLORS.tomato;
+    if (msgType == SUCCESS) return COLORS.green;
+    else return COLORS.blue;
+  };
+  const handlePress = () => {
+    onDissmis();
+  };
   return (
     <Modal.CustomModal visible={visible} onDissmis={onDissmis}>
       <View style={styles.modalView}>
@@ -36,6 +45,12 @@ const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
         </TouchableOpacity>
 
         <Text style={[FONTS.body2, { textAlign: "right" }]}>{msg}</Text>
+
+        <CustomButton
+          label={"חזור"}
+          onPress={handlePress}
+          style={[styles.btn, { backgroundColor: getButtonBackground() }]}
+        />
       </View>
     </Modal.CustomModal>
   );
@@ -73,5 +88,8 @@ const styles = StyleSheet.create({
     top: -20,
     borderRadius: 30,
     alignSelf: "center",
+  },
+  btn: {
+    marginTop: 30,
   },
 });

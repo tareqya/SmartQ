@@ -26,6 +26,14 @@ const TimeIcon = ({ color = "black", size = 25 }) => (
   <Ionicons name="time-outline" size={size} color={color} />
 );
 
+const LeftArrowIcon = ({ color = "black", size = 25 }) => (
+  <AntDesign name="left" size={size} color={color} />
+);
+
+const RightArrowIcon = ({ color = "black", size = 25 }) => (
+  <AntDesign name="right" size={size} color={color} />
+);
+
 export default {
   PersonIcon,
   LogoutIcon,
@@ -35,4 +43,6 @@ export default {
   CloseIcon,
   CalendarIcon,
   TimeIcon,
+  LeftArrowIcon,
+  RightArrowIcon,
 };

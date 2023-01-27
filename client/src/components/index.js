@@ -5,6 +5,8 @@ import Body from "./Body";
 import * as Modal from "./CustomModal";
 import MsgDialog from "./MsgDialog";
 import Appointment from "./Appointment";
+import LoadingBar from "./LoadingBar";
+import Card from "./Card";
 export {
   Container,
   EditText,
@@ -13,4 +15,6 @@ export {
   Modal,
   MsgDialog,
   Appointment,
+  LoadingBar,
+  Card,
 };

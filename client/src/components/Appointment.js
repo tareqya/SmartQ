@@ -8,10 +8,11 @@ const REMOVED = COLORS.tomato;
 const ACTIVE = COLORS.green;
 const PASS = COLORS.lightGray;
 
-const Appointment = ({ appointment }) => {
+const Appointment = ({ appointment, backgroundColor = null }) => {
   const { doctor, available, kid, time, doctorImage } = appointment;
 
   const appointmentStatus = () => {
+    if (backgroundColor != null) return backgroundColor;
     const currentTime = new Date().getTime();
     if (time < currentTime && available == false) {
       return PASS;
