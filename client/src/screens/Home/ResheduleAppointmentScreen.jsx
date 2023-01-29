@@ -4,12 +4,13 @@ import { useSelector } from "react-redux";
 
 import { Body, Container } from "../../components";
 
-const ResheduleAppointmentScreen = ({ navigation }) => {
+const ResheduleAppointmentScreen = ({ navigation, route }) => {
   const HomeState = useSelector((state) => state.HomeReducer);
   const { selectedAppointment } = HomeState;
+  const { title } = route.params;
   return (
     <Container>
-      <Body navigation={navigation}></Body>
+      <Body navigation={navigation} title={title}></Body>
     </Container>
   );
 };

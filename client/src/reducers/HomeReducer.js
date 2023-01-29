@@ -4,6 +4,8 @@ import {
   SELECT_APPOINTMENT,
   REMOVE_APPOINTMENT_FAIL,
   REMOVE_APPOINTMENT_SUCCESS,
+  REPLACE_APPOINTMENT_FAIL,
+  REPLACE_APPOINTMENT_SUCCESS,
 } from "../actions/TYPES";
 
 const default_state = {
@@ -34,6 +36,20 @@ export default function (state = default_state, action) {
             ? { ...appointment, available: true }
             : appointment
         ),
+      };
+    case REPLACE_APPOINTMENT_FAIL:
+      return { ...state };
+    case REPLACE_APPOINTMENT_SUCCESS:
+      const appointments = [
+        ...state.appointments.filter(
+          (appointment) => appointment.key != state.selectedAppointment.key
+        ),
+        action.payload,
+      ];
+      return {
+        ...state,
+        selectedAppointment: null,
+        appointments: appointments.sort((a, b) => b.time - a.time),
       };
     default:
       return state;

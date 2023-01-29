@@ -7,6 +7,9 @@ import MsgDialog from "./MsgDialog";
 import Appointment from "./Appointment";
 import LoadingBar from "./LoadingBar";
 import Card from "./Card";
+import CircleView from "./CircleView";
+import YesNoDialog from "./YesNoDialog";
+
 export {
   Container,
   EditText,
@@ -17,4 +20,6 @@ export {
   Appointment,
   LoadingBar,
   Card,
+  CircleView,
+  YesNoDialog,
 };

@@ -7,7 +7,7 @@ import { removeAppointment, setLoading } from "../../actions";
 import { Appointment, Body, Container, CustomButton } from "../../components";
 import { COLORS, FONTS } from "../../../assets/styles";
 
-const CancelAppointmentScreen = ({ navigation }) => {
+const CancelAppointmentScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   const HomeState = useSelector((state) => state.HomeReducer);
@@ -17,6 +17,7 @@ const CancelAppointmentScreen = ({ navigation }) => {
   const { selectedAppointment } = HomeState;
   const { loading } = CommonState;
   const { user } = AuthState;
+  const { title } = route.params;
 
   const onComplate = () => {
     navigation.popToTop();
@@ -36,7 +37,7 @@ const CancelAppointmentScreen = ({ navigation }) => {
 
   return (
     <Container>
-      <Body navigation={navigation}>
+      <Body navigation={navigation} title={title}>
         <View style={{ marginTop: 20 }}>
           <Appointment
             appointment={selectedAppointment}

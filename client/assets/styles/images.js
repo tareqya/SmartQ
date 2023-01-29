@@ -7,7 +7,9 @@ export const EMPTY_IMAGE = require("../images/empty.png");
 export const CANCEL_IMAGE = require("../images/cancel.png");
 export const WAITING_IMAGE = require("../images/waiting.png");
 export const RESHEDULE_IMAGE = require("../images/reshedule.png");
-
+export const CANCEL_TIME_IMAGE = require("../images/cancelTime.png");
+export const CHANGE_TIME_IMAGE = require("../images/changeTime.png");
+export const SEARCH_TIME_IMAGE = require("../images/searchTime.png");
 export default {
   LOGO,
   PROFILE,
@@ -18,4 +20,7 @@ export default {
   CANCEL_IMAGE,
   WAITING_IMAGE,
   RESHEDULE_IMAGE,
+  CANCEL_TIME_IMAGE,
+  CHANGE_TIME_IMAGE,
+  SEARCH_TIME_IMAGE,
 };

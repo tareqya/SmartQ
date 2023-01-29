@@ -44,7 +44,6 @@ const Container = ({ children }) => {
         data={[children]}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => item}
-        ListFooterComponent={<View style={styles.footer} />}
       />
     </View>
   );
@@ -55,8 +54,5 @@ export default Container;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  footer: {
-    height: SIZES.padding * 2,
   },
 });

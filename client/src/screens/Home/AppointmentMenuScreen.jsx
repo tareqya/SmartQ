@@ -2,8 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { Appointment, Body, Card, Container } from "../../components";
-import { FONTS, Images } from "../../../assets/styles";
+import { Appointment, Body, CircleView, Container } from "../../components";
+import { COLORS, FONTS, Images } from "../../../assets/styles";
 
 const CANCEL = "CANCEL";
 const WAITING = "WAITING";
@@ -14,19 +14,19 @@ const OPTIONS = [
     value: RESHEDULE,
     title: "שינוי מועד תור",
     subTitle: "לחץ לשינוי מועד התור שנקבע לך",
-    imageUrl: Images.RESHEDULE_IMAGE,
+    imageUrl: Images.CHANGE_TIME_IMAGE,
   },
   {
     value: CANCEL,
     title: "ביטול תור",
     subTitle: "לחץ לביטול התור שנקבע לך",
-    imageUrl: Images.CANCEL_IMAGE,
+    imageUrl: Images.CANCEL_TIME_IMAGE,
   },
   {
     value: WAITING,
-    title: "תחפש תור קרוב יותר",
+    title: "חפש תור קרוב",
     subTitle: "לחץ לבדיקה אם ישנו תור קרוב יותר",
-    imageUrl: Images.WAITING_IMAGE,
+    imageUrl: Images.SEARCH_TIME_IMAGE,
   },
 ];
 
@@ -37,14 +37,18 @@ const AppointmentMenuScreen = ({ navigation }) => {
   const handleOptionPress = (option) => {
     switch (option.value) {
       case CANCEL:
-        navigation.navigate("CancelAppointmentScreen");
+        navigation.navigate("CancelAppointmentScreen", { title: option.title });
         break;
       case RESHEDULE:
-        navigation.navigate("ResheduleAppointmentScreen");
+        navigation.navigate("ResheduleAppointmentScreen", {
+          title: option.title,
+        });
 
         break;
       case WAITING:
-        navigation.navigate("SearchCloserAppointmentScreen");
+        navigation.navigate("SearchCloserAppointmentScreen", {
+          title: option.title,
+        });
         break;
     }
   };
@@ -61,20 +65,50 @@ const AppointmentMenuScreen = ({ navigation }) => {
           </View>
 
           <View style={{ marginTop: 10 }}>
-            {OPTIONS.map((option, index) => (
+            <View>
               <TouchableOpacity
                 activeOpacity={0.8}
-                key={index.toString()}
                 style={styles.optionWrapper}
-                onPress={() => handleOptionPress(option)}
+                onPress={() => handleOptionPress(OPTIONS[0])}
               >
-                <Card
-                  title={option.title}
-                  subTitle={option.subTitle}
-                  imgUrl={option.imageUrl}
+                <CircleView
+                  title={OPTIONS[0].title}
+                  imageUrl={OPTIONS[0].imageUrl}
+                  color={COLORS.darkBlue}
                 />
               </TouchableOpacity>
-            ))}
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.optionWrapper}
+                onPress={() => handleOptionPress(OPTIONS[1])}
+              >
+                <CircleView
+                  title={OPTIONS[1].title}
+                  imageUrl={OPTIONS[1].imageUrl}
+                  color={COLORS.tomato}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.optionWrapper}
+                onPress={() => handleOptionPress(OPTIONS[2])}
+              >
+                <CircleView
+                  title={OPTIONS[2].title}
+                  imageUrl={OPTIONS[2].imageUrl}
+                  color={COLORS.blue}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Body>

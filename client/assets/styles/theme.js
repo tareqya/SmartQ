@@ -12,6 +12,7 @@ export const COLORS = {
   text: "rgb(28, 28, 30)",
 
   // colors
+  darkBlue: "#124975",
   black: "#1E1F20",
   white: "#FFFFFF",
   lightGray: "#ABAFB8",

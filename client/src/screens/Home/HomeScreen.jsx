@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Appointment, Body, Container, LoadingBar } from "../../components";
-import { Images, FONTS, SIZES } from "../../../assets/styles";
+import { Images, FONTS, SIZES, COLORS } from "../../../assets/styles";
 import {
   cleanMsg,
   setLoading,
@@ -63,7 +63,9 @@ const HomeScreen = ({ navigation }) => {
         />
         <View style={styles.welcomeWrapper}>
           <Text style={FONTS.body2}>ברוך הבא</Text>
-          <Text style={FONTS.h2}>{`${user.firstName} ${user.lastName}`}</Text>
+          <Text
+            style={[FONTS.h2, { color: COLORS.darkBlue }]}
+          >{`${user.firstName} ${user.lastName}`}</Text>
         </View>
       </View>
 

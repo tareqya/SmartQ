@@ -1,11 +1,17 @@
-import { Platform, StyleSheet, View, TouchableOpacity } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import React from "react";
-import { SIZES, Icons, COLORS } from "../../assets/styles";
+import { SIZES, Icons, COLORS, FONTS } from "../../assets/styles";
 
-const Body = ({ children, navigation = null }) => {
+const Body = ({ children, navigation = null, title = "" }) => {
   const Header = () => {
     return (
-      <View style={{ marginBottom: 10 }}>
+      <View style={{ marginBottom: 10, flexDirection: "row-reverse" }}>
         <TouchableOpacity
           style={styles.backButtonWrapper}
           activeOpacity={0.7}
@@ -15,6 +21,7 @@ const Body = ({ children, navigation = null }) => {
         >
           <Icons.RightArrowIcon color={COLORS.black} />
         </TouchableOpacity>
+        <Text style={styles.headerTitle}>{title}</Text>
       </View>
     );
   };
@@ -22,6 +29,7 @@ const Body = ({ children, navigation = null }) => {
     <View style={styles.container}>
       {navigation != null && Header()}
       {children}
+      <View style={styles.footer} />
     </View>
   );
 };
@@ -48,5 +56,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.darkGray,
     marginHorizontal: 10,
     alignSelf: "flex-end",
+  },
+  footer: {
+    height: SIZES.padding * 3,
+  },
+  headerTitle: {
+    ...FONTS.h2,
+    color: COLORS.darkBlue,
   },
 });

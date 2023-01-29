@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import * as Modal from "./CustomModal";
 import {
@@ -11,7 +18,15 @@ import { COLORS, FONTS, SIZES } from "../../assets/styles";
 import { ERROR, SUCCESS, INFO } from "../utils/constans";
 import { Button } from "react-native-paper";
 
-const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
+const YesNoDialog = ({
+  msg,
+  msgType,
+  visible,
+  onDissmis,
+  yesPress,
+  noPress,
+  loading = false,
+}) => {
   const getDialogImage = () => {
     if (msgType == ERROR) return ERROR_IMAGE;
     if (msgType == SUCCESS) return SUCCESS_IMAGE;
@@ -23,9 +38,7 @@ const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
     if (msgType == SUCCESS) return COLORS.green;
     else return COLORS.blue;
   };
-  const handlePress = () => {
-    onDissmis();
-  };
+
   return (
     <Modal.CustomModal visible={visible} onDissmis={onDissmis}>
       <View style={styles.modalView}>
@@ -46,18 +59,30 @@ const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
 
         <Text style={[FONTS.body1, { textAlign: "right" }]}>{msg}</Text>
 
-        <Button
-          onPress={handlePress}
-          style={[styles.btn, { backgroundColor: getButtonBackground() }]}
-        >
-          <Text style={[FONTS.h2, { color: COLORS.white }]}>{"סגור"}</Text>
-        </Button>
+        <View style={styles.btnsWrapper}>
+          <Button
+            onPress={yesPress}
+            style={[styles.btn, { backgroundColor: getButtonBackground() }]}
+          >
+            <Text style={[FONTS.h2, { color: COLORS.white }]}>{"כן"}</Text>
+          </Button>
+
+          <Button onPress={noPress} style={[styles.btn]}>
+            <Text style={[FONTS.h2, { color: COLORS.white }]}>{"לא"}</Text>
+          </Button>
+        </View>
+
+        <View style={{ marginTop: 10, justifyContent: "center" }}>
+          {loading && (
+            <ActivityIndicator size={"large"} color={COLORS.darkBlue} />
+          )}
+        </View>
       </View>
     </Modal.CustomModal>
   );
 };
 
-export default MsgDialog;
+export default YesNoDialog;
 
 const styles = StyleSheet.create({
   icon: {
@@ -91,6 +116,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   btn: {
+    backgroundColor: COLORS.lightGray,
+    width: 150,
+  },
+  btnsWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginTop: 30,
   },
 });

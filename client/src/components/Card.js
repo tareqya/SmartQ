@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   title: {
-    color: "#124975",
+    color: COLORS.darkBlue,
     textAlign: "right",
   },
   subTitle: {
