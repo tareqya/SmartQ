@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
       doctor,
       available: true,
       kid: false,
-      time: new Date(time).getTime(), //eg: time format => MM/DD/YYYY HH:mm
+      time: time, //eg: time in mseconds
       uid: "",
       doctorImage: "",
     };
