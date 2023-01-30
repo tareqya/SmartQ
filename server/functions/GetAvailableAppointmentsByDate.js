@@ -5,19 +5,36 @@ module.exports = async (req, res) => {
     if (!req.body.time || req.body.kid == undefined) {
       throw "Bad input";
     }
-
     const { time, kid } = req.body;
+
+    const date = new Date(time);
+    const from = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDay(),
+      8,
+      0,
+      0
+    );
+    const to = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDay(),
+      22,
+      0,
+      0
+    );
+
     var snapshot = await admin
       .firestore()
       .collection("Appointments")
       .where("available", "==", true)
       .get();
 
-    const currentTime = new Date().getTime();
     var data = snapshot.docs.filter((doc) => {
       return (
-        doc.data().time < time &&
-        doc.data().time >= currentTime &&
+        doc.data().time >= from.getTime() &&
+        doc.data().time <= to.getTime() &&
         doc.data().kid == kid
       );
     });
@@ -30,9 +47,9 @@ module.exports = async (req, res) => {
 
     return res.send({ appointments: data, msg: "success" });
   } catch (err) {
-    console.error(err);
+    console.log(err);
     return res
       .status(422)
-      .send({ msg: "Failed to fetch appointments", appointments: null });
+      .send({ msg: "Failed to get appointments!", appointments: [] });
   }
 };

@@ -56,15 +56,16 @@ const generateMonthDays = (date) => {
   return days;
 };
 
-const DatePicker = ({ currentDate, onSelect, style = {} }) => {
-  const [selectedDate, setSelectedDate] = React.useState(currentDate);
+const DatePicker = ({ onSelect, style = {} }) => {
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [monthDays, setMonthDays] = React.useState(
-    generateMonthDays(currentDate)
+    generateMonthDays(new Date())
   );
 
   const handleNextMonth = () => {
     const date = new Date();
     date.setTime(selectedDate.getTime());
+    date.setDate(1);
     date.setMonth(date.getMonth() + 1);
     setSelectedDate(date);
     setMonthDays(generateMonthDays(date));
@@ -73,6 +74,7 @@ const DatePicker = ({ currentDate, onSelect, style = {} }) => {
   const handlePrevMonth = () => {
     const date = new Date();
     date.setTime(selectedDate.getTime());
+    date.setDate(1);
     date.setMonth(date.getMonth() - 1);
     setSelectedDate(date);
     setMonthDays(generateMonthDays(date));

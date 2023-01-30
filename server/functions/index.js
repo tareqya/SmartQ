@@ -9,6 +9,7 @@ const RemoveAppointment = require("./RemoveAppointment");
 const GetUserAppointments = require("./GetUserAppointments");
 const FindCloserAppointments = require("./FindCloserAppointments");
 const ReplaceAppointment = require("./ReplaceAppointment");
+const GetAvailableAppointmentsByDate = require("./GetAvailableAppointmentsByDate");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -22,3 +23,6 @@ exports.FindCloserAppointments = functions.https.onRequest(
   FindCloserAppointments
 );
 exports.ReplaceAppointment = functions.https.onRequest(ReplaceAppointment);
+exports.GetAvailableAppointmentsByDate = functions.https.onRequest(
+  GetAvailableAppointmentsByDate
+);
