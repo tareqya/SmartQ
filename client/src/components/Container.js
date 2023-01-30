@@ -9,7 +9,6 @@ import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 
-import { SIZES } from "../../assets/styles";
 import MsgDialog from "./MsgDialog";
 import { cleanMsg } from "../actions";
 
@@ -17,23 +16,18 @@ const Container = ({ children }) => {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const CommonState = useSelector((state) => state.CommonReducer);
-  const { msg, msgType } = CommonState;
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    if (msg != "") setVisible(true);
-  }, [msg]);
+  const { msg, msgType, showMsg } = CommonState;
 
   const handleDissmis = () => {
-    setVisible(false);
     dispatch(cleanMsg());
   };
+
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <SafeAreaView style={{ marginTop: Platform.OS == "ios" ? 0 : 20 }} />
 
       <MsgDialog
-        visible={visible}
+        visible={showMsg}
         onDissmis={handleDissmis}
         msg={msg}
         msgType={msgType}

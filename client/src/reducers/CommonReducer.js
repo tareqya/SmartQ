@@ -11,6 +11,7 @@ const default_state = {
   msg: "",
   msgType: "",
   loading: false,
+  showMsg: false,
 };
 
 export default function (state = default_state, action) {
@@ -20,21 +21,24 @@ export default function (state = default_state, action) {
         ...state,
         msg: action.payload,
         msgType: ERROR,
+        showMsg: true,
       };
     case SHOW_INFO_MSG:
       return {
         ...state,
         msg: action.payload,
         msgType: INFO,
+        showMsg: true,
       };
     case SHOW_SUCCESS_MSG:
       return {
         ...state,
         msg: action.payload,
         msgType: SUCCESS,
+        showMsg: true,
       };
     case CLEAN_MSG:
-      return { ...state, msgType: "", msg: "" };
+      return { ...state, msgType: "", msg: "", showMsg: false };
     case LOADING:
       return { ...state, loading: action.payload };
     default:

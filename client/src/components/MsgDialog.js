@@ -26,6 +26,7 @@ const MsgDialog = ({ msg, msgType, visible, onDissmis }) => {
   const handlePress = () => {
     onDissmis();
   };
+
   return (
     <Modal.CustomModal visible={visible} onDissmis={onDissmis}>
       <View style={styles.modalView}>
