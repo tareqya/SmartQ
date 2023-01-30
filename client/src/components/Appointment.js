@@ -56,7 +56,8 @@ export default Appointment;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     borderRadius: 10,
   },
   doctorImage: {
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   timeWrapper: {
-    marginVertical: 10,
+    marginTop: 20,
+
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",

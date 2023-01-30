@@ -81,6 +81,7 @@ const AppointmentMenuScreen = ({ navigation }) => {
 
             <View
               style={{
+                marginTop: 50,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",

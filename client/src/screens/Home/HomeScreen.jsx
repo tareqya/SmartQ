@@ -5,6 +5,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "flex-start",
     marginHorizontal: 20,
-    marginTop: 10,
+    marginTop: Platform.OS == "ios" ? 10 : 50,
     alignItems: "center",
   },
   welcomeWrapper: {

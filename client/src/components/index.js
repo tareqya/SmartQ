@@ -9,7 +9,7 @@ import LoadingBar from "./LoadingBar";
 import Card from "./Card";
 import CircleView from "./CircleView";
 import YesNoDialog from "./YesNoDialog";
-
+import DatePicker from "./DatePicker";
 export {
   Container,
   EditText,
@@ -22,4 +22,5 @@ export {
   Card,
   CircleView,
   YesNoDialog,
+  DatePicker,
 };

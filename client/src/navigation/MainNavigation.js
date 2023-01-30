@@ -35,12 +35,12 @@ const MainNavigation = () => {
     fetchCurrentUser();
   }, []);
 
-  if (loading)
-    return (
-      <View style={{ flex: 1, justifyContent: "center", marginTop: -100 }}>
-        <LoadingBar />
-      </View>
-    );
+  // if (loading)
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", marginTop: -100 }}>
+  //       <LoadingBar />
+  //     </View>
+  //   );
 
   return (
     <NavigationContainer theme={theme}>

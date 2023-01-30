@@ -10,7 +10,7 @@ const CircleView = ({ title, imageUrl, color }) => {
           <Image source={imageUrl} style={styles.image} resizeMode="stretch" />
         </View>
       </View>
-      <Text style={[FONTS.h2, { color: color }]}>{title}</Text>
+      <Text style={[FONTS.h2, { color: color, marginTop: 10 }]}>{title}</Text>
     </View>
   );
 };

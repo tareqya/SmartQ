@@ -12,7 +12,7 @@ const CustomButton = ({ label, onPress, style = {}, loading = false }) => {
       loading={loading}
       style={[styles.btn, style]}
     >
-      <Text style={FONTS.h1}>{label}</Text>
+      <Text style={FONTS.h2}>{label}</Text>
     </Button>
   );
 };

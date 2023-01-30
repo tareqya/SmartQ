@@ -22,3 +22,11 @@ export const getTime = (time) => {
   const mins = d.getMinutes().toString().padStart(2, "0");
   return `${hours} : ${mins}`;
 };
+
+export const CompareDateObjects = (date1, date2) => {
+  return (
+    date1.getDay() == date2.getDay() &&
+    date1.getMonth() == date2.getMonth() &&
+    date1.getFullYear() == date2.getFullYear()
+  );
+};
