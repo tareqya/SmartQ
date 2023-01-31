@@ -43,6 +43,7 @@ const HomeScreen = ({ navigation }) => {
   const handleAppointmentPress = (appointment) => {
     const currentTime = new Date().getTime();
     if (appointment.time < currentTime) return;
+    if (appointment.available == true) return;
     dispatch(setSelectedAppointment(appointment));
     navigation.navigate("AppointmentMenuScreen");
   };

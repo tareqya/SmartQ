@@ -11,16 +11,16 @@ module.exports = async (req, res) => {
     const from = new Date(
       date.getFullYear(),
       date.getMonth(),
-      date.getDay(),
-      8,
+      date.getDate(),
+      7,
       0,
       0
     );
     const to = new Date(
       date.getFullYear(),
       date.getMonth(),
-      date.getDay(),
-      22,
+      date.getDate(),
+      23,
       0,
       0
     );

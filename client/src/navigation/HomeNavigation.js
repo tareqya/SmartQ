@@ -28,6 +28,7 @@ const BottomTabNavigation = () => {
           borderTopEndRadius: 20,
           height: 80,
           position: "absolute",
+          backgroundColor: COLORS.background,
         },
       }}
       initialRouteName="HomeScreen"

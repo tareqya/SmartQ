@@ -22,7 +22,7 @@ const MONTHS = [
 
 const WEEK = ["א", "ב", "ג", "ד", "ה", "ו", "ש"];
 
-function getDaysInMonth(month, year) {
+function getDaysInMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
@@ -31,7 +31,8 @@ const generateMonthDays = (date) => {
   let firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   const dayOfWeek = firstDayOfMonth.getDay();
 
-  const days_num = getDaysInMonth(date.getFullYear(), date.getMonth());
+  const days_num = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
+
   var week = [];
   for (let i = 0; i < dayOfWeek; i++) {
     week.push(" ");
@@ -57,10 +58,15 @@ const generateMonthDays = (date) => {
 };
 
 const DatePicker = ({ onSelect, style = {} }) => {
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [monthDays, setMonthDays] = React.useState(
-    generateMonthDays(new Date())
-  );
+  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [monthDays, setMonthDays] = React.useState(null);
+
+  React.useEffect(() => {
+    const currentDate = new Date();
+    setSelectedDate(currentDate);
+    const days = generateMonthDays(currentDate);
+    setMonthDays(days);
+  }, []);
 
   const handleNextMonth = () => {
     const date = new Date();
@@ -88,6 +94,8 @@ const DatePicker = ({ onSelect, style = {} }) => {
 
     onSelect(date);
   };
+
+  if (!selectedDate || !monthDays) return;
 
   return (
     <View style={[styles.continer, style]}>

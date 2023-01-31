@@ -1,16 +1,33 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Body, Container, DatePicker } from "../../components";
+import {
+  Appointment,
+  Body,
+  Container,
+  DatePicker,
+  YesNoDialog,
+} from "../../components";
 import { COLORS, FONTS } from "../../../assets/styles";
-import { BASE_URL } from "../../utils/constans";
+import { BASE_URL, INFO } from "../../utils/constans";
 import useFetch from "../../hooks/useFetch";
-import { showErrorMsg } from "../../actions";
+import { replaceAppointment, showErrorMsg } from "../../actions";
 
 const URL = `${BASE_URL}/GetAvailableAppointmentsByDate`;
 
 const ResheduleAppointmentScreen = ({ navigation, route }) => {
+  const [visible, setVisible] = React.useState(false);
+  const [selected, setSelected] = React.useState(null);
+  const [updating, setUpdating] = React.useState(false);
+
   const dispatch = useDispatch();
   const HomeState = useSelector((state) => state.HomeReducer);
   const AuthState = useSelector((state) => state.AuthReducer);
@@ -36,14 +53,97 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
     setParams({ kid: user.isKid, time: date.getTime() });
   };
 
+  const handleSelectedAppointment = (appointment) => {
+    setSelected(appointment);
+    setVisible(true);
+  };
+
+  const onComplate = () => {
+    navigation.popToTop();
+  };
+
+  const onDissmis = () => {
+    setSelected(null);
+    setVisible(false);
+  };
+
+  const handleYesPress = async () => {
+    if (updating) return;
+    setUpdating(true);
+    const action = await replaceAppointment(
+      dispatch,
+      selectedAppointment,
+      selected,
+      user.id,
+      onComplate
+    );
+    dispatch(action);
+    setUpdating(false);
+  };
+
+  React.useEffect(() => {
+    if (error) {
+      const action = showErrorMsg("משהו השתבש נסה שוב מאוחר יותר!");
+      dispatch(action);
+    }
+  }, [error]);
+
   return (
     <Container>
+      <YesNoDialog
+        msg={"האם אתה בטוח כי ברצונך להחליף את התור?"}
+        msgType={INFO}
+        visible={visible}
+        onDissmis={onDissmis}
+        yesPress={handleYesPress}
+        noPress={onDissmis}
+        loading={updating}
+      />
       <Body navigation={navigation} title={title}>
         <View>
-          <Text style={[FONTS.h1, { textAlign: "right", marginTop: 20 }]}>
-            בחר תאריך
-          </Text>
-          <DatePicker onSelect={handleSelectedDate} style={styles.datePicker} />
+          <View>
+            <Text style={[FONTS.h1, { textAlign: "right", marginTop: 20 }]}>
+              בחר תאריך
+            </Text>
+            <DatePicker
+              onSelect={handleSelectedDate}
+              style={styles.datePicker}
+            />
+          </View>
+          <View>
+            {loading && (
+              <ActivityIndicator size={"large"} color={COLORS.darkBlue} />
+            )}
+            {loading == false &&
+              data != null &&
+              data.appointments.length == 0 && (
+                <Text style={styles.emptyTitle}>
+                  {"סליחה אבל המערכת אינה מצאה תורים בתאריך שנבחר."}
+                </Text>
+              )}
+
+            {loading == false &&
+              data != null &&
+              data.appointments.length > 0 && (
+                <Text style={[FONTS.h1, styles.appointmentsTitle]}>
+                  בחר תור :
+                </Text>
+              )}
+            <FlatList
+              data={data ? data.appointments : []}
+              scrollEnabled={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => handleSelectedAppointment(item)}
+                  activeOpacity={0.7}
+                  style={{ marginVertical: 10 }}
+                >
+                  <Appointment appointment={item} />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
         </View>
       </Body>
     </Container>
@@ -56,5 +156,16 @@ const styles = StyleSheet.create({
   datePicker: {
     marginVertical: 20,
     backgroundColor: COLORS.background,
+  },
+  emptyTitle: {
+    ...FONTS.h1,
+    textAlign: "right",
+    color: COLORS.tomato,
+    marginVertical: 20,
+  },
+  appointmentsTitle: {
+    textAlign: "right",
+    marginVertical: 10,
+    color: COLORS.darkBlue,
   },
 });

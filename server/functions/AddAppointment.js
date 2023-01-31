@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
       doctor,
       available: true,
       kid: false,
-      time: time, //eg: time in mseconds
+      time: parseInt(time), //eg: time in mseconds
       uid: "",
       doctorImage: "",
     };

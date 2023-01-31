@@ -7,9 +7,10 @@ import { getDate, getTime } from "../utils/utilsFunctions";
 const REMOVED = COLORS.tomato;
 const ACTIVE = COLORS.green;
 const PASS = COLORS.lightGray;
+const NORMAL = COLORS.blue;
 
 const Appointment = ({ appointment, backgroundColor = null }) => {
-  const { doctor, available, kid, time, doctorImage } = appointment;
+  const { doctor, available, kid, time, doctorImage, uid } = appointment;
 
   const appointmentStatus = () => {
     if (backgroundColor != null) return backgroundColor;
@@ -19,7 +20,9 @@ const Appointment = ({ appointment, backgroundColor = null }) => {
     }
     if (available == false) return ACTIVE;
 
-    return REMOVED;
+    if (available == true && uid != "") return REMOVED;
+
+    return NORMAL;
   };
 
   return (
