@@ -2,10 +2,10 @@ const admin = require("firebase-admin");
 
 module.exports = async (req, res) => {
   try {
-    if (!req.body.time || req.body.kid == undefined) {
+    if (!req.body.time || !req.body.uid || req.body.kid == undefined) {
       throw "Bad input";
     }
-    const { time, kid } = req.body;
+    const { time, kid, uid } = req.body;
 
     const date = new Date(time);
     const from = new Date(
@@ -35,7 +35,8 @@ module.exports = async (req, res) => {
       return (
         doc.data().time >= from.getTime() &&
         doc.data().time <= to.getTime() &&
-        doc.data().kid == kid
+        doc.data().kid == kid &&
+        doc.data().uid != uid
       );
     });
 

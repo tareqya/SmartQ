@@ -7,13 +7,15 @@ import {
   REMOVE_APPOINTMENT_SUCCESS,
   REPLACE_APPOINTMENT_FAIL,
   REPLACE_APPOINTMENT_SUCCESS,
+  RESET_APPOINTMENT_SUCCESS,
+  RESET_APPOINTMENT_FAIL,
 } from "./TYPES";
 
 import { BASE_URL } from "../utils/constans";
 import { showErrorMsg, showSuccessMsg } from "./CommonActions";
 
 const Get_User_Appointments = `${BASE_URL}/GetUserAppointments`;
-const Remove_Appointment = `${BASE_URL}/RemoveAppointment`;
+const Change_Appointment_Status = `${BASE_URL}/ChangeAppointmentStatus`;
 const Replace_Appointment = `${BASE_URL}/ReplaceAppointment`;
 
 export const fetchMyAppointements = async (dispatch, uid) => {
@@ -48,9 +50,10 @@ export const removeAppointment = async (
   onComplate
 ) => {
   try {
-    await axios.post(Remove_Appointment, {
+    await axios.post(Change_Appointment_Status, {
       key: appointment.key,
       uid,
+      available: true,
     });
     dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור נמחק!"));
     onComplate();
@@ -64,6 +67,34 @@ export const removeAppointment = async (
     console.log(err.response.msg);
     return {
       type: REMOVE_APPOINTMENT_FAIL,
+    };
+  }
+};
+
+export const resetAppointment = async (
+  dispatch,
+  appointment,
+  uid,
+  onComplate
+) => {
+  try {
+    await axios.post(Change_Appointment_Status, {
+      key: appointment.key,
+      uid,
+      available: false,
+    });
+    dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור שוחזר!"));
+    onComplate();
+    return {
+      type: RESET_APPOINTMENT_SUCCESS,
+      payload: appointment.key,
+    };
+  } catch (err) {
+    const msg = "שחזור התור נכשלה!";
+    dispatch(showErrorMsg(msg));
+    console.log(err.response.msg);
+    return {
+      type: RESET_APPOINTMENT_FAIL,
     };
   }
 };

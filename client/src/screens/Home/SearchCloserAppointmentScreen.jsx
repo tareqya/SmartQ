@@ -37,6 +37,7 @@ const SearchCloserAppointmentScreen = ({ navigation, route }) => {
   const [data, loading, error] = useFetch(URL, {
     kid: user.isKid,
     time: selectedAppointment.time,
+    uid: user.id,
   });
 
   const onComplate = () => {

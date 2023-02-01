@@ -2,11 +2,11 @@ const admin = require("firebase-admin");
 
 module.exports = async (req, res) => {
   try {
-    if (!req.body.time || req.body.kid == undefined) {
+    if (!req.body.uid || !req.body.time || req.body.kid == undefined) {
       throw "Bad input";
     }
 
-    const { time, kid } = req.body;
+    const { time, kid, uid } = req.body;
     var snapshot = await admin
       .firestore()
       .collection("Appointments")
@@ -18,7 +18,8 @@ module.exports = async (req, res) => {
       return (
         doc.data().time < time &&
         doc.data().time >= currentTime &&
-        doc.data().kid == kid
+        doc.data().kid == kid &&
+        doc.data().uid != uid
       );
     });
 

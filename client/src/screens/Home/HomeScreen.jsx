@@ -9,23 +9,35 @@ import {
 } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Appointment, Body, Container, LoadingBar } from "../../components";
+import {
+  Appointment,
+  Body,
+  Container,
+  LoadingBar,
+  YesNoDialog,
+} from "../../components";
 import { Images, FONTS, SIZES, COLORS } from "../../../assets/styles";
 import {
   cleanMsg,
   setLoading,
   fetchMyAppointements,
   setSelectedAppointment,
+  resetAppointment,
 } from "../../actions";
+import { INFO } from "../../utils/constans";
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+
+  const [visible, setVisible] = React.useState(false);
+  const [updating, setUpdating] = React.useState(false);
+
   const AuthState = useSelector((state) => state.AuthReducer);
   const HomeState = useSelector((state) => state.HomeReducer);
   const CommonState = useSelector((state) => state.CommonReducer);
 
   const { user } = AuthState;
-  const { appointments } = HomeState;
+  const { appointments, selectedAppointment } = HomeState;
   const { loading } = CommonState;
 
   React.useEffect(() => {
@@ -43,9 +55,34 @@ const HomeScreen = ({ navigation }) => {
   const handleAppointmentPress = (appointment) => {
     const currentTime = new Date().getTime();
     if (appointment.time < currentTime) return;
-    if (appointment.available == true) return;
+    if (appointment.available == true) {
+      dispatch(setSelectedAppointment(appointment));
+      setVisible(true);
+      return;
+    }
     dispatch(setSelectedAppointment(appointment));
     navigation.navigate("AppointmentMenuScreen");
+  };
+
+  const onComplate = () => {
+    onDissmis();
+  };
+
+  const onDissmis = () => {
+    setVisible(false);
+  };
+
+  const handleYesPress = async () => {
+    if (updating) return;
+    setUpdating(true);
+    const action = await resetAppointment(
+      dispatch,
+      selectedAppointment,
+      user.id,
+      onComplate
+    );
+    dispatch(action);
+    setUpdating(false);
   };
 
   if (loading) {
@@ -57,6 +94,15 @@ const HomeScreen = ({ navigation }) => {
   }
   return (
     <Container>
+      <YesNoDialog
+        msg={"האם אתה בטוח כי ברצונך לשחזר את התור?"}
+        msgType={INFO}
+        visible={visible}
+        onDissmis={onDissmis}
+        yesPress={handleYesPress}
+        noPress={onDissmis}
+        loading={updating}
+      />
       <View style={styles.profileWrapper}>
         <Image
           source={Images.PROFILE}

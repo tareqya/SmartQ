@@ -5,7 +5,7 @@ var serviceAccount = require("./serviceAccountKey.json");
 
 const GetUser = require("./GetUser");
 const AddAppointment = require("./AddAppointment");
-const RemoveAppointment = require("./RemoveAppointment");
+const ChangeAppointmentStatus = require("./ChangeAppointmentStatus");
 const GetUserAppointments = require("./GetUserAppointments");
 const FindCloserAppointments = require("./FindCloserAppointments");
 const ReplaceAppointment = require("./ReplaceAppointment");
@@ -17,7 +17,9 @@ admin.initializeApp({
 
 exports.GetUser = functions.https.onRequest(GetUser);
 exports.AddAppointment = functions.https.onRequest(AddAppointment);
-exports.RemoveAppointment = functions.https.onRequest(RemoveAppointment);
+exports.ChangeAppointmentStatus = functions.https.onRequest(
+  ChangeAppointmentStatus
+);
 exports.GetUserAppointments = functions.https.onRequest(GetUserAppointments);
 exports.FindCloserAppointments = functions.https.onRequest(
   FindCloserAppointments

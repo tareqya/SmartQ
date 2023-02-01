@@ -39,6 +39,7 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
   const [data, loading, error, setParams] = useFetch(URL, {
     kid: user.isKid,
     time: new Date().getTime(),
+    uid: user.id,
   });
 
   const handleSelectedDate = (date) => {

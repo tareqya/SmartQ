@@ -6,6 +6,8 @@ import {
   REMOVE_APPOINTMENT_SUCCESS,
   REPLACE_APPOINTMENT_FAIL,
   REPLACE_APPOINTMENT_SUCCESS,
+  RESET_APPOINTMENT_FAIL,
+  RESET_APPOINTMENT_SUCCESS,
 } from "../actions/TYPES";
 
 const default_state = {
@@ -26,7 +28,7 @@ export default function (state = default_state, action) {
     case SELECT_APPOINTMENT:
       return { ...state, selectedAppointment: action.payload };
     case REMOVE_APPOINTMENT_FAIL:
-      return { ...state };
+      return { ...state, selectedAppointment: null };
     case REMOVE_APPOINTMENT_SUCCESS:
       return {
         ...state,
@@ -37,6 +39,18 @@ export default function (state = default_state, action) {
             : appointment
         ),
       };
+    case RESET_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        selectedAppointment: null,
+        appointments: state.appointments.map((appointment) =>
+          appointment.key == action.payload
+            ? { ...appointment, available: false }
+            : appointment
+        ),
+      };
+    case RESET_APPOINTMENT_FAIL:
+      return { ...state, selectedAppointment: null };
     case REPLACE_APPOINTMENT_FAIL:
       return { ...state };
     case REPLACE_APPOINTMENT_SUCCESS:

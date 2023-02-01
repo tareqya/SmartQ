@@ -1,11 +1,11 @@
 const admin = require("firebase-admin");
 
 module.exports = async (req, res) => {
-  if (!req.body.key || !req.body.uid) {
+  if (!req.body.key || !req.body.uid || req.body.available == undefined) {
     return res.status(422).send({ msg: "Bad input" });
   }
   try {
-    const { key, uid } = req.body;
+    const { key, uid, available } = req.body;
     const appointment = await admin
       .firestore()
       .collection("Appointments")
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
       .firestore()
       .collection("Appointments")
       .doc(key)
-      .update({ available: true });
+      .update({ available: available });
     return res.send({ msg: "success" });
   } catch (err) {
     console.log(err);
