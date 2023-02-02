@@ -57,6 +57,7 @@ const SearchCloserAppointmentScreen = ({ navigation, route }) => {
       selectedAppointment,
       selected,
       user.id,
+      user.isKid,
       onComplate
     );
     dispatch(action);

@@ -7,20 +7,18 @@ module.exports = async (req, res) => {
     }
 
     const { time, kid, uid } = req.body;
+    const currentTime = new Date().getTime();
     var snapshot = await admin
       .firestore()
       .collection("Appointments")
       .where("available", "==", true)
+      .where("time", ">=", currentTime)
+      .where("time", "<", time)
+      .where("kid", "==", kid)
       .get();
 
-    const currentTime = new Date().getTime();
     var data = snapshot.docs.filter((doc) => {
-      return (
-        doc.data().time < time &&
-        doc.data().time >= currentTime &&
-        doc.data().kid == kid &&
-        doc.data().uid != uid
-      );
+      return doc.data().uid != uid;
     });
 
     data = data.map((doc) => {

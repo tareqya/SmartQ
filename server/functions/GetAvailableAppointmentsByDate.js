@@ -29,15 +29,14 @@ module.exports = async (req, res) => {
       .firestore()
       .collection("Appointments")
       .where("available", "==", true)
+      .where("time", ">=", from.getTime())
+      .where("time", "<=", to.getTime())
+      .where("kid", "==", kid)
+
       .get();
 
     var data = snapshot.docs.filter((doc) => {
-      return (
-        doc.data().time >= from.getTime() &&
-        doc.data().time <= to.getTime() &&
-        doc.data().kid == kid &&
-        doc.data().uid != uid
-      );
+      return doc.data().uid != uid;
     });
 
     data = data.map((doc) => {

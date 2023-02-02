@@ -150,6 +150,7 @@ const HomeScreen = ({ navigation }) => {
       dispatch,
       selectedAppointment,
       user.id,
+      user.isKid,
       onComplate
     );
     dispatch(action);

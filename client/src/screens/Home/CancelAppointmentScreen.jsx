@@ -29,6 +29,7 @@ const CancelAppointmentScreen = ({ navigation, route }) => {
       dispatch,
       selectedAppointment,
       user.id,
+      user.isKid,
       onComplate
     );
     dispatch(action);

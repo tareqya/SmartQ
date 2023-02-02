@@ -76,6 +76,7 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
       selectedAppointment,
       selected,
       user.id,
+      user.isKid,
       onComplate
     );
     dispatch(action);

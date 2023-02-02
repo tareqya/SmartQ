@@ -1,11 +1,17 @@
 const admin = require("firebase-admin");
+const NotifyClients = require("./NotifyClients");
 
 module.exports = async (req, res) => {
-  if (!req.body.key || !req.body.uid || req.body.available == undefined) {
+  if (
+    !req.body.key ||
+    !req.body.uid ||
+    req.body.available == undefined ||
+    req.body.kid == undefined
+  ) {
     return res.status(422).send({ msg: "Bad input" });
   }
   try {
-    const { key, uid, available } = req.body;
+    const { key, uid, available, kid } = req.body;
     const appointment = await admin
       .firestore()
       .collection("Appointments")
@@ -21,6 +27,11 @@ module.exports = async (req, res) => {
       .collection("Appointments")
       .doc(key)
       .update({ available: available });
+
+    // send notification only when appointment removed
+    if (available == true) {
+      NotifyClients(appointment.data().time, uid, kid);
+    }
     return res.send({ msg: "success" });
   } catch (err) {
     console.log(err);

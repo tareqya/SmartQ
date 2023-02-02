@@ -47,12 +47,14 @@ export const removeAppointment = async (
   dispatch,
   appointment,
   uid,
+  kid,
   onComplate
 ) => {
   try {
     await axios.post(Change_Appointment_Status, {
       key: appointment.key,
       uid,
+      kid,
       available: true,
     });
     dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור נמחק!"));
@@ -75,12 +77,14 @@ export const resetAppointment = async (
   dispatch,
   appointment,
   uid,
+  kid,
   onComplate
 ) => {
   try {
     await axios.post(Change_Appointment_Status, {
       key: appointment.key,
       uid,
+      kid,
       available: false,
     });
     dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור שוחזר!"));
@@ -104,6 +108,7 @@ export const replaceAppointment = async (
   oldAppointment,
   newAppointment,
   uid,
+  kid,
   onComplate
 ) => {
   try {
@@ -111,6 +116,7 @@ export const replaceAppointment = async (
       oldKey: oldAppointment.key,
       newKey: newAppointment.key,
       uid: uid,
+      kid: kid,
     });
 
     dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור הוחלף!"));
