@@ -4,6 +4,7 @@ var admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
 
 const GetUser = require("./GetUser");
+const UpdateToken = require("./UpdateToken");
 const AddAppointment = require("./AddAppointment");
 const ChangeAppointmentStatus = require("./ChangeAppointmentStatus");
 const GetUserAppointments = require("./GetUserAppointments");
@@ -16,6 +17,7 @@ admin.initializeApp({
 });
 
 exports.GetUser = functions.https.onRequest(GetUser);
+exports.UpdateToken = functions.https.onRequest(UpdateToken);
 exports.AddAppointment = functions.https.onRequest(AddAppointment);
 exports.ChangeAppointmentStatus = functions.https.onRequest(
   ChangeAppointmentStatus

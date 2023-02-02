@@ -51,7 +51,7 @@ const CancelAppointmentScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.btnsWrapper}>
             <CustomButton
-              label={"בטול תור"}
+              label={"ביטול תור"}
               style={styles.cancelBtn}
               onPress={handleRemove}
               loading={loading}

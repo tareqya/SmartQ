@@ -51,7 +51,7 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
       dispatch(action);
       return;
     }
-    setParams({ kid: user.isKid, time: date.getTime() });
+    setParams({ kid: user.isKid, time: date.getTime(), uid: user.id });
   };
 
   const handleSelectedAppointment = (appointment) => {

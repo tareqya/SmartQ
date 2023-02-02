@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1073252014591",
+    "project_id": "smartq-20ef8",
+    "storage_bucket": "smartq-20ef8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073252014591:android:1b6f398e68a316c4796fca",
+        "android_client_info": {
+          "package_name": "com.app.smartq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073252014591-f57mi7evap501lumpo4o4k66ipbiov94.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg8fAEVY3gZGVpM63n8V61DWTi8rog2-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073252014591-f57mi7evap501lumpo4o4k66ipbiov94.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

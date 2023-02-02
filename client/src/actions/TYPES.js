@@ -1,6 +1,8 @@
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
+export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
 export const CLEAN_MSG = "CLEAN_MSG";
 export const SHOW_ERROR_MSG = "SHOW_ERROR_MSG";
 export const SHOW_INFO_MSG = "SHOW_INFO_MSG";

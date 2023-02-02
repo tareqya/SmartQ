@@ -28,7 +28,7 @@ export const fetchMyAppointements = async (dispatch, uid) => {
   } catch (err) {
     const msg = "משהו השתבש נסה שוב מאוחר יותר";
     dispatch(showErrorMsg(msg));
-    console.log(err.response.data);
+    console.log(err.response?.data);
     return {
       type: FETCH_USER_APPOINTMENTS_FAIL,
       payload: msg,

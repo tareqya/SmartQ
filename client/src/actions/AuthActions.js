@@ -1,11 +1,19 @@
 import axios from "axios";
-import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "./TYPES";
+import {
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  UPDATE_TOKEN_FAILED,
+  UPDATE_TOKEN_SUCCESS,
+} from "./TYPES";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { encrpt } from "../utils/utilsFunctions";
 import { BASE_URL } from "../utils/constans";
 import { showErrorMsg } from "./CommonActions";
 
 const Get_User = `${BASE_URL}/GetUser`;
+const Update_Token = `${BASE_URL}/UpdateToken`;
+
 const USER_KEY = "User";
 
 export const login = async (dispatch, uid, password) => {
@@ -50,4 +58,24 @@ export const fetch_current_user = async () => {
     type: LOGIN_SUCCESS,
     payload: JSON.parse(value),
   };
+};
+
+export const updateToken = async (token, uid) => {
+  try {
+    await axios.post(Update_Token, { token, uid });
+    var user = await AsyncStorage.getItem(USER_KEY);
+    user = JSON.parse(user);
+    user.token = token;
+    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+
+    return {
+      type: UPDATE_TOKEN_SUCCESS,
+      payload: user,
+    };
+  } catch (err) {
+    console.log(err.response?.data);
+    return {
+      type: UPDATE_TOKEN_FAILED,
+    };
+  }
 };

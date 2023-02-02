@@ -9,6 +9,9 @@ import {
 } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
 import {
   Appointment,
   Body,
@@ -23,14 +26,26 @@ import {
   fetchMyAppointements,
   setSelectedAppointment,
   resetAppointment,
+  updateToken,
 } from "../../actions";
 import { INFO } from "../../utils/constans";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [visible, setVisible] = React.useState(false);
   const [updating, setUpdating] = React.useState(false);
+  const [notification, setNotification] = React.useState(false);
+  const notificationListener = React.useRef();
+  const responseListener = React.useRef();
 
   const AuthState = useSelector((state) => state.AuthReducer);
   const HomeState = useSelector((state) => state.HomeReducer);
@@ -41,15 +56,25 @@ const HomeScreen = ({ navigation }) => {
   const { loading } = CommonState;
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      dispatch(cleanMsg());
-      dispatch(setLoading(true));
-      const action = await fetchMyAppointements(dispatch, user.id);
-      dispatch(action);
-      dispatch(setLoading(false));
-    };
-
     fetchData();
+    updateNotificationToken();
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
 
   const handleAppointmentPress = (appointment) => {
@@ -62,6 +87,52 @@ const HomeScreen = ({ navigation }) => {
     }
     dispatch(setSelectedAppointment(appointment));
     navigation.navigate("AppointmentMenuScreen");
+  };
+
+  const registerForPushNotificationsAsync = async () => {
+    var token = null;
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("SmartQ", {
+        name: "SmartQ",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        console.log("Failed to get push token for push notification!");
+        return null;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    }
+
+    return token;
+  };
+
+  const fetchData = async () => {
+    dispatch(cleanMsg());
+    dispatch(setLoading(true));
+    const action = await fetchMyAppointements(dispatch, user.id);
+    dispatch(action);
+    dispatch(setLoading(false));
+  };
+
+  const updateNotificationToken = async () => {
+    const token = await registerForPushNotificationsAsync();
+    if (token != null) {
+      const action = await updateToken(token, user.id);
+      dispatch(action);
+    }
   };
 
   const onComplate = () => {
@@ -139,7 +210,7 @@ const HomeScreen = ({ navigation }) => {
                 style={styles.emptyListImg}
                 resizeMode="stretch"
               />
-              <Text style={[FONTS.body2, { marginTop: 10 }]}>
+              <Text style={[FONTS.h1, { marginTop: 10, color: COLORS.tomato }]}>
                 לא קיים תורים עבורך
               </Text>
             </View>
