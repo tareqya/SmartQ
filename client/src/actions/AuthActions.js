@@ -31,7 +31,7 @@ export const login = async (dispatch, uid, password) => {
   } catch (err) {
     const msg = "ת״ז או סיסמה לא נכונים!";
     dispatch(showErrorMsg(msg));
-    console.log(err.response.data);
+    console.log(err.response?.data);
     return {
       type: LOGIN_FAIL,
     };

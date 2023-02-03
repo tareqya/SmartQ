@@ -141,7 +141,10 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
                   activeOpacity={0.7}
                   style={{ marginVertical: 10 }}
                 >
-                  <Appointment appointment={item} />
+                  <Appointment
+                    appointment={item}
+                    backgroundColor={COLORS.blue}
+                  />
                 </TouchableOpacity>
               )}
             />

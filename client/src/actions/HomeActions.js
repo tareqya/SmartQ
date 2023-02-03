@@ -66,7 +66,7 @@ export const removeAppointment = async (
   } catch (err) {
     const msg = "מחיקת התור נכשלה!";
     dispatch(showErrorMsg(msg));
-    console.log(err.response.msg);
+    console.log(err.response?.msg);
     return {
       type: REMOVE_APPOINTMENT_FAIL,
     };
@@ -96,7 +96,7 @@ export const resetAppointment = async (
   } catch (err) {
     const msg = "שחזור התור נכשלה!";
     dispatch(showErrorMsg(msg));
-    console.log(err.response.msg);
+    console.log(err.response?.msg);
     return {
       type: RESET_APPOINTMENT_FAIL,
     };
@@ -131,7 +131,7 @@ export const replaceAppointment = async (
   } catch (err) {
     const msg = "שינוי התור נכשלה!";
     dispatch(showErrorMsg(msg));
-    console.log(err.response.msg);
+    console.log(err.response?.msg);
     return {
       type: REPLACE_APPOINTMENT_FAIL,
     };
