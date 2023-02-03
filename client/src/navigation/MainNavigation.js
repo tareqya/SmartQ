@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +8,6 @@ import AuthNavigation from "./AuthNavigation";
 import HomeNavigation from "./HomeNavigation";
 import { fetch_current_user } from "../actions";
 import { LoadingBar } from "../components";
-import { View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,12 +35,12 @@ const MainNavigation = () => {
     fetchCurrentUser();
   }, []);
 
-  // if (loading)
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", marginTop: -100 }}>
-  //       <LoadingBar />
-  //     </View>
-  //   );
+  if (loading)
+    return (
+      <View style={{ flex: 1, justifyContent: "center", marginTop: -100 }}>
+        <LoadingBar />
+      </View>
+    );
 
   return (
     <NavigationContainer theme={theme}>
