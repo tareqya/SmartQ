@@ -10,7 +10,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/icon.png",
+          "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
       ]
@@ -58,6 +58,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "75b01f34-b809-40bb-9db2-dfafaa0865f1"
+      }
     }
   }
 }
