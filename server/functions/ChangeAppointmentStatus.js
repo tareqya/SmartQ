@@ -31,6 +31,11 @@ module.exports = async (req, res) => {
     // send notification only when appointment removed
     if (available == true) {
       NotifyClients(appointment.data().time, uid, kid);
+      await admin
+        .firestore()
+        .collection("Appointments")
+        .doc(key)
+        .update({ localEvent: "" });
     }
     return res.send({ msg: "success" });
   } catch (err) {

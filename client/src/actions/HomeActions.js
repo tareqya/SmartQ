@@ -9,6 +9,7 @@ import {
   REPLACE_APPOINTMENT_SUCCESS,
   RESET_APPOINTMENT_SUCCESS,
   RESET_APPOINTMENT_FAIL,
+  UPDATE_APPOINTMENT_LOCAL_EVENT,
 } from "./TYPES";
 
 import { BASE_URL } from "../utils/constans";
@@ -17,6 +18,19 @@ import { showErrorMsg, showSuccessMsg } from "./CommonActions";
 const Get_User_Appointments = `${BASE_URL}/GetUserAppointments`;
 const Change_Appointment_Status = `${BASE_URL}/ChangeAppointmentStatus`;
 const Replace_Appointment = `${BASE_URL}/ReplaceAppointment`;
+const Update_LocalEvent = `${BASE_URL}/UpdateAppointmentLocalEvent`;
+
+export const updateAppointemnts = async (appointment, localEventKey) => {
+  await axios.post(Update_LocalEvent, {
+    key: appointment.key,
+    localEvent: localEventKey,
+  });
+  appointment.localEvent = localEventKey;
+  return {
+    type: UPDATE_APPOINTMENT_LOCAL_EVENT,
+    payload: appointment,
+  };
+};
 
 export const fetchMyAppointements = async (dispatch, uid) => {
   try {
@@ -109,7 +123,8 @@ export const replaceAppointment = async (
   newAppointment,
   uid,
   kid,
-  onComplate
+  onComplate,
+  localEvent
 ) => {
   try {
     await axios.post(Replace_Appointment, {
@@ -117,13 +132,14 @@ export const replaceAppointment = async (
       newKey: newAppointment.key,
       uid: uid,
       kid: kid,
+      localEvent: localEvent,
     });
 
     dispatch(showSuccessMsg("הפעולה בוצעה בהצלחה התור הוחלף!"));
     onComplate();
     newAppointment.uid = uid;
     newAppointment.available = false;
-
+    newAppointment.localEvent = localEvent;
     return {
       type: REPLACE_APPOINTMENT_SUCCESS,
       payload: newAppointment,

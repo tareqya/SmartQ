@@ -27,8 +27,10 @@ import {
   setSelectedAppointment,
   resetAppointment,
   updateToken,
+  updateAppointemnts,
 } from "../../actions";
 import { INFO } from "../../utils/constans";
+import { createCalendarEvent } from "../../utils/utilsFunctions";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -76,6 +78,31 @@ const HomeScreen = ({ navigation }) => {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (appointments.length > 0) addAppointmentToLocalCalender();
+  }, [appointments]);
+
+  const addAppointmentToLocalCalender = async () => {
+    const currentTime = new Date().getTime();
+    const _appointments = appointments.filter(
+      (appointment) =>
+        !appointment.localEvent &&
+        !appointment.available &&
+        appointment.time >= currentTime
+    );
+
+    for (let appointment of _appointments) {
+      const eventId = await createCalendarEvent(
+        "מרכז רפואי מאיר",
+        new Date(appointment.time),
+        "מרכז רפואי מאיר",
+        appointment.doctor
+      );
+      const action = await updateAppointemnts(appointment, eventId);
+      dispatch(action);
+    }
+  };
 
   const handleAppointmentPress = (appointment) => {
     const currentTime = new Date().getTime();
@@ -146,7 +173,15 @@ const HomeScreen = ({ navigation }) => {
   const handleYesPress = async () => {
     if (updating) return;
     setUpdating(true);
-    const action = await resetAppointment(
+    const eventId = await createCalendarEvent(
+      "מרכז רפואי מאיר",
+      new Date(selectedAppointment.time),
+      "מרכז רפואי מאיר",
+      selectedAppointment.doctor
+    );
+    let action = await updateAppointemnts(selectedAppointment, eventId);
+    dispatch(action);
+    action = await resetAppointment(
       dispatch,
       selectedAppointment,
       user.id,

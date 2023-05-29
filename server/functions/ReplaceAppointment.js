@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     return res.status(422).send({ msg: "Bad input" });
   }
   try {
-    const { oldKey, newKey, uid, kid } = req.body;
+    const { oldKey, newKey, uid, kid, localEvent } = req.body;
     const oldAppointment = await admin
       .firestore()
       .collection("Appointments")
@@ -39,13 +39,13 @@ module.exports = async (req, res) => {
       .firestore()
       .collection("Appointments")
       .doc(newKey)
-      .update({ available: false, uid: uid });
+      .update({ available: false, uid: uid, localEvent: localEvent });
 
     await admin
       .firestore()
       .collection("Appointments")
       .doc(oldKey)
-      .update({ available: true, uid: "" });
+      .update({ available: true, uid: "", localEvent: "" });
 
     NotifyClients(oldAppointment.data().time, uid, kid);
     return res.send({ msg: "success" });

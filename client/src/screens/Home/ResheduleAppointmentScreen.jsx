@@ -20,6 +20,10 @@ import { COLORS, FONTS } from "../../../assets/styles";
 import { BASE_URL, INFO } from "../../utils/constans";
 import useFetch from "../../hooks/useFetch";
 import { replaceAppointment, showErrorMsg } from "../../actions";
+import {
+  createCalendarEvent,
+  removeCalendarEvent,
+} from "../../utils/utilsFunctions";
 
 const URL = `${BASE_URL}/GetAvailableAppointmentsByDate`;
 
@@ -71,14 +75,25 @@ const ResheduleAppointmentScreen = ({ navigation, route }) => {
   const handleYesPress = async () => {
     if (updating) return;
     setUpdating(true);
+
+    const eventId = await createCalendarEvent(
+      "מרכז רפואי מאיר",
+      new Date(selected.time),
+      "מרכז רפואי מאיר",
+      selected.doctor
+    );
+
     const action = await replaceAppointment(
       dispatch,
       selectedAppointment,
       selected,
       user.id,
       user.isKid,
-      onComplate
+      onComplate,
+      eventId
     );
+
+    await removeCalendarEvent(selectedAppointment.localEvent);
     dispatch(action);
     setUpdating(false);
   };

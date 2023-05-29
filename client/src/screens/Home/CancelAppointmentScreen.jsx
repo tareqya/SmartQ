@@ -6,6 +6,7 @@ import { removeAppointment, setLoading } from "../../actions";
 
 import { Appointment, Body, Container, CustomButton } from "../../components";
 import { COLORS, FONTS } from "../../../assets/styles";
+import { removeCalendarEvent } from "../../utils/utilsFunctions";
 
 const CancelAppointmentScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const CancelAppointmentScreen = ({ navigation, route }) => {
     );
     dispatch(action);
     dispatch(setLoading(false));
+    await removeCalendarEvent(selectedAppointment.localEvent);
   };
 
   return (

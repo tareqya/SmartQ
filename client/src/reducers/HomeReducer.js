@@ -8,6 +8,7 @@ import {
   REPLACE_APPOINTMENT_SUCCESS,
   RESET_APPOINTMENT_FAIL,
   RESET_APPOINTMENT_SUCCESS,
+  UPDATE_APPOINTMENT_LOCAL_EVENT,
 } from "../actions/TYPES";
 
 const default_state = {
@@ -54,7 +55,7 @@ export default function (state = default_state, action) {
     case REPLACE_APPOINTMENT_FAIL:
       return { ...state };
     case REPLACE_APPOINTMENT_SUCCESS:
-      const appointments = [
+      let appointments = [
         ...state.appointments.filter(
           (appointment) => appointment.key != state.selectedAppointment.key
         ),
@@ -65,6 +66,12 @@ export default function (state = default_state, action) {
         selectedAppointment: null,
         appointments: appointments.sort((a, b) => b.time - a.time),
       };
+    case UPDATE_APPOINTMENT_LOCAL_EVENT:
+      let _appointments = [...state.appointments];
+      _appointments = _appointments.map((appointment) =>
+        appointment.key === action.payload.key ? action.payload : appointment
+      );
+      return { ...state, appointments: _appointments };
     default:
       return state;
   }
