@@ -5,6 +5,7 @@ module.exports = async (tokens, msg) => {
     let expo = new Expo({ accessToken: ACCESS_TOKEN });
     const title = "SmartQ";
     const messages = [];
+    console.log(tokens);
     for (let token of tokens) {
       const message = {
         to: token,

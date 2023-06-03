@@ -84,23 +84,27 @@ const HomeScreen = ({ navigation }) => {
   }, [appointments]);
 
   const addAppointmentToLocalCalender = async () => {
-    const currentTime = new Date().getTime();
-    const _appointments = appointments.filter(
-      (appointment) =>
-        !appointment.localEvent &&
-        !appointment.available &&
-        appointment.time >= currentTime
-    );
-
-    for (let appointment of _appointments) {
-      const eventId = await createCalendarEvent(
-        "מרכז רפואי מאיר",
-        new Date(appointment.time),
-        "מרכז רפואי מאיר",
-        appointment.doctor
+    try {
+      const currentTime = new Date().getTime();
+      const _appointments = appointments.filter(
+        (appointment) =>
+          !appointment.localEvent &&
+          !appointment.available &&
+          appointment.time >= currentTime
       );
-      const action = await updateAppointemnts(appointment, eventId);
-      dispatch(action);
+
+      for (let appointment of _appointments) {
+        const eventId = await createCalendarEvent(
+          "מרכז רפואי מאיר",
+          new Date(appointment.time),
+          "מרכז רפואי מאיר",
+          appointment.doctor
+        );
+        const action = await updateAppointemnts(appointment, eventId);
+        dispatch(action);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -128,20 +132,18 @@ const HomeScreen = ({ navigation }) => {
       });
     }
 
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        console.log("Failed to get push token for push notification!");
-        return null;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
     }
+    if (finalStatus !== "granted") {
+      console.log("Failed to get push token for push notification!");
+      return null;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
 
     return token;
   };

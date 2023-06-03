@@ -15,7 +15,6 @@ module.exports = async (req, res) => {
       0,
       0
     );
-    from.setDate(from.getDate() - 1);
     const to = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -24,7 +23,6 @@ module.exports = async (req, res) => {
       0,
       0
     );
-    to.setDate(to.getDate() - 1);
     var snapshot = await admin
       .firestore()
       .collection("Appointments")
